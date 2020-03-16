@@ -1,4 +1,3 @@
-export enum CellType {
-  normal,
-  faded
+export interface Player {
+  pos: { x: number; y: number };
 }

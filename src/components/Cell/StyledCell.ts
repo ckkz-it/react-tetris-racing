@@ -1,15 +1,15 @@
 import styled from "styled-components";
 
-import { CellType } from "../../interfaces";
-import texture from "../../assets/img/texture.png";
+import { STAGE_WIDTH } from "../../helpers";
 
 interface Props {
-  type: CellType;
+  type: string;
 }
 
 const StyledCell = styled.div<Props>`
-  background: url(${texture}) #000;
-  opacity: ${props => (props.type === CellType.normal ? 1 : 0.5)};
+  width: calc(25vw / ${STAGE_WIDTH});
+  background-image: url(${props => props.type});
+  background-size: cover;
 `;
 
 export default StyledCell;
