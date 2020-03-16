@@ -8,3 +8,6 @@ export const CAR_MATRIX = [
   [0, 1, 0],
   [1, 0, 1]
 ];
+
+export const createStage = () =>
+  Array.from(Array(STAGE_HEIGHT), () => new Array(STAGE_WIDTH).fill(0));
