@@ -1,19 +1,21 @@
-import React from "react";
+import React from 'react';
 
-import StyledStage from "./StyledStage";
-import { CellType, STAGE_HEIGHT, STAGE_WIDTH } from "../../helpers";
-import Cell from "../Cell";
+import { CellType, STAGE_HEIGHT, STAGE_WIDTH } from '../../helpers';
+import { Stage as IStage } from '../../interfaces';
+import StyledStage from './StyledStage';
+import Cell from '../Cell';
 
 interface Props {
-  stage: number[][];
+  stage: IStage;
 }
 
 const Stage: React.FC<Props> = ({ stage }) => {
+  const cells = stage.map((row, y) =>
+    row.map((value, x) => <Cell key={`${y}${x}${value}`} type={value !== 0 ? CellType.DARK : CellType.LIGHT} />),
+  );
   return (
     <StyledStage width={STAGE_WIDTH} height={STAGE_HEIGHT}>
-      {stage.map((row, y) =>
-        row.map((cell, x) => <Cell key={`${y}${x}`} type={CellType.LIGHT} />)
-      )}
+      {cells}
     </StyledStage>
   );
 };

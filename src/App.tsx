@@ -1,51 +1,67 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { useState } from 'react';
+import styled from 'styled-components';
 
-import "./App.css";
-import Stage from "./components/Stage";
-import useStage from "./hooks/useStage";
-import usePlayer from "./hooks/usePlayer";
-import { SPEED } from "./helpers";
+import './App.css';
+import Stage from './components/Stage';
+import useStage from './hooks/useStage';
+import usePlayer from './hooks/usePlayer';
+import { checkCollision, MOVE_POSITION, SPEED } from './helpers';
+import { useBorders } from './hooks/useBorders';
+import { useInterval } from './hooks/useInterval';
 
-const Wrapper = styled.div`
+const StageWrapper = styled.div`
   display: flex;
   justify-content: center;
   height: 100%;
   width: 100%;
 `;
 
+let timeoutId: number | null;
+
 const App: React.FC = () => {
-  const [speed, setSpeed] = useState(SPEED);
+  console.log('rerender');
+  const [speed, setSpeed] = useState<number | null>(SPEED);
 
-  const [stage] = useStage();
   const [player, updatePlayerPos] = usePlayer();
+  const [borders, setBorders, updateBordersPos] = useBorders();
+  const [stage] = useStage(player, borders);
 
-  const movePlayer = (e: KeyboardEvent) => {
-    console.log(e);
-    const up = e.key === "ArrowUp";
-    const left = e.key === "ArrowLeft";
-    const right = e.key === "ArrowRight";
-    if (up) {
-      updatePlayerPos({ x: 0, y: 1 });
+  const movePlayer = (key: string) => {
+    const movePosition = MOVE_POSITION[key];
+    if (checkCollision(player, stage, movePosition)) {
+      updatePlayerPos(movePosition);
     }
-    if (left) {
-      updatePlayerPos({ x: -1, y: 0 });
-    }
-    if (right) {
-      updatePlayerPos({ x: 1, y: 0 });
+  };
+
+  const onKeyDown = (e: KeyboardEvent) => {
+    if (e.key in MOVE_POSITION) {
+      e.preventDefault();
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+      timeoutId = setTimeout(() => {
+        movePlayer(e.key);
+      }, 10);
     }
   };
 
   const startGame = () => {
-    window.addEventListener("keydown", movePlayer);
+    window.addEventListener('keydown', onKeyDown);
   };
 
   startGame();
 
+  useInterval(() => {
+    updateBordersPos();
+  }, speed);
+
   return (
-    <Wrapper>
-      <Stage stage={stage as number[][]} />
-    </Wrapper>
+    <>
+      <StageWrapper>
+        <Stage stage={stage} />
+      </StageWrapper>
+      <button onClick={() => setSpeed(speed ? null : SPEED)}>trigger</button>
+    </>
   );
 };
 

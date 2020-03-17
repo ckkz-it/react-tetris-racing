@@ -38,6 +38,8 @@
     ]
   },
   "devDependencies": {
-    "@types/styled-components": "^5.0.1"
+    "@types/styled-components": "^5.0.1",
+    "prettier": "^1.19.1",
+    "tslint": "^6.1.0"
   }
 }

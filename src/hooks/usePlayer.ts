@@ -1,17 +1,18 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import { Player } from "../interfaces";
+import { Car } from '../interfaces';
+import { CAR_MATRIX, STAGE_HEIGHT, STAGE_WIDTH } from '../helpers';
 
 const usePlayer = () => {
-  const [player, setPlayer] = useState<Player>({
-    pos: { x: 0, y: 0 }
+  const [player, setPlayer] = useState<Car>({
+    pos: { x: STAGE_WIDTH - 5, y: STAGE_HEIGHT - 5 },
+    shape: CAR_MATRIX,
   });
 
   const updatePlayerPos = ({ x, y }: { x: number; y: number }) => {
-    setPlayer(prev => ({
+    setPlayer((prev: Car) => ({
       ...prev,
-      x: prev.pos.x + x,
-      y: prev.pos.y + y
+      pos: { x: prev.pos.x + x, y: prev.pos.y + y },
     }));
   };
 
