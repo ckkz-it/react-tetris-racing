@@ -1,12 +1,12 @@
 import { useState } from 'react';
 
 import { Car } from '../interfaces';
-import { CAR_MATRIX, STAGE_HEIGHT, STAGE_WIDTH } from '../helpers';
+import { CAR_SHAPE, STAGE_HEIGHT, STAGE_WIDTH } from '../helpers';
 
 const usePlayer = () => {
   const [player, setPlayer] = useState<Car>({
     pos: { x: STAGE_WIDTH - 5, y: STAGE_HEIGHT - 5 },
-    shape: CAR_MATRIX,
+    shape: CAR_SHAPE,
   });
 
   const updatePlayerPos = ({ x, y }: { x: number; y: number }) => {

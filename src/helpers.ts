@@ -1,11 +1,10 @@
 import { Car, Coordinate, Stage } from './interfaces';
 
-export const FRAME_RATE = 60;
 export const STAGE_WIDTH = 10;
 export const STAGE_HEIGHT = 18;
-export const SPEED = 500;
+export const INITIAL_SPEED = 1000;
 
-export const CAR_MATRIX = [
+export const CAR_SHAPE = [
   [0, 1, 0],
   [1, 1, 1],
   [0, 1, 0],
@@ -21,23 +20,17 @@ export const MOVE_POSITION: { [key: string]: Coordinate } = {
 export const createStage = (): Stage => Array.from(new Array(STAGE_HEIGHT), () => new Array(STAGE_WIDTH).fill(0));
 
 export const createBorders = (): Coordinate[] => {
-  const borders: Coordinate[] = [];
-  for (let y = -1; y > -20; y -= 1) {
-    if (y % 4 === 0) {
-      y -= 1;
-    }
-    borders.push({ x: 0, y });
-  }
-  for (let y = -1; y > -20; y -= 1) {
-    if (y % 4 === 0) {
-      y -= 1;
-    }
-    borders.push({ x: STAGE_WIDTH - 1, y });
-  }
-  return borders;
+  return [
+    { x: 0, y: -1 },
+    { x: 0, y: -2 },
+    { x: 0, y: -3 },
+    { x: STAGE_WIDTH - 1, y: -1 },
+    { x: STAGE_WIDTH - 1, y: -2 },
+    { x: STAGE_WIDTH - 1, y: -3 },
+  ];
 };
 
-export const checkCollision = (player: Car, stage: Stage, { x: moveX, y: moveY }: { x: number; y: number }) => {
+export const checkWallCollision = (player: Car, stage: Stage, { x: moveX, y: moveY }: Coordinate) => {
   if (
     // Out to left (including car size)
     player.pos.x + moveX + player.shape[0].length > STAGE_WIDTH ||

@@ -1,7 +1,18 @@
+@font-face {
+  font-family: 'Tetris';
+  font-style: normal;
+  font-weight: normal;
+  src: local('./assets/fonts/tetris.woff'), url('./assets/fonts/tetris.woff') format('woff');
+}
+
 html,
 body {
+  font-family: Tetris, sans-serif;
   background-color: #000;
   margin: 0;
   padding: 0;
-  font-family: Roboto, sans-serif;
+}
+
+* {
+  font-family: Tetris, sans-serif;
 }

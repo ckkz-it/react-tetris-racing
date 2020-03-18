@@ -1,15 +1,18 @@
 import { useState } from 'react';
 
 import { Coordinate } from '../interfaces';
-import { createBorders, STAGE_WIDTH } from '../helpers';
+import { createBorders, STAGE_HEIGHT } from '../helpers';
 
-export const useBorders = () => {
-  const [borders, setBorders] = useState<Coordinate[]>(createBorders());
+export const useBorders = (tick: number) => {
+  const [borders, setBorders] = useState<Coordinate[]>([]);
 
-  const updateBordersPos = () => {
-    const newBorders = borders.map(b => ({ ...b, y: b.y + 1 }));
+  const produceBorders = () => {
+    let newBorders = borders.filter(b => b.y < STAGE_HEIGHT).map(b => ({ ...b, y: b.y + 1 }));
+    if (tick % 4 === 0) {
+      newBorders = newBorders.concat(createBorders());
+    }
     setBorders(newBorders);
   };
 
-  return [borders, setBorders, updateBordersPos] as any;
+  return [borders, produceBorders] as any;
 };
