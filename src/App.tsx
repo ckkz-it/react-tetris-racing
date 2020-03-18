@@ -14,6 +14,9 @@ const StageWrapper = styled.div`
   justify-content: center;
   height: 100%;
   width: 100%;
+  padding-top: 50px;
+  background-image: url(https://w-dog.ru/wallpapers/15/1/457300449655990/serdce-tetris-lyubov.jpg);
+  background-size: cover;
 `;
 
 let timeoutId: number | null;
@@ -41,7 +44,7 @@ const App: React.FC = () => {
       }
       timeoutId = setTimeout(() => {
         movePlayer(e.key);
-      }, 10);
+      }, 5);
     }
   };
 
