@@ -8,6 +8,7 @@ import useStage from './hooks/useStage';
 import usePlayer from './hooks/usePlayer';
 import {
   CAR_SHAPE,
+  checkCarsCollision,
   checkWallCollision,
   createBorders,
   INITIAL_SPEED,
@@ -43,8 +44,14 @@ const App: React.FC = () => {
 
   const movePlayer = (key: string) => {
     const movePosition = MOVE_POSITION[key];
-    if (checkWallCollision(player, stage, movePosition)) {
-      updatePlayerPos(movePosition);
+    if (speed !== null && !checkWallCollision(player, stage, movePosition)) {
+      const car = checkCarsCollision(player, cars, movePosition);
+      if (!car) {
+        updatePlayerPos(movePosition);
+      } else {
+        console.log(car);
+        setSpeed(null);
+      }
     }
   };
 
@@ -98,6 +105,10 @@ const App: React.FC = () => {
 
     if (ticks !== 0 && ticks % 120 === 0 && speed !== null) {
       setSpeed(speed / 1.5);
+    }
+
+    if (checkCarsCollision(player, cars, { x: 0, y: 0 })) {
+      setSpeed(null);
     }
   }, speed);
 

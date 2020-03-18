@@ -41,9 +41,31 @@ export const checkWallCollision = (player: Car, stage: Stage, { x: moveX, y: mov
     // Out to top (including padding of 1)
     player.pos.y + moveY - 1 < 0
   ) {
-    return false;
+    return true;
   }
-  return true;
+  return false;
+};
+
+export const checkCarsCollision = (player: Car, cars: Car[], { x: moveX, y: moveY }: Coordinate) => {
+  for (const car of cars) {
+    if (
+      // Hit car moving from left to right or vice versa being on same level of lower
+      (player.pos.x + moveX === car.pos.x &&
+        player.pos.y + moveY >= car.pos.y &&
+        player.pos.y + moveY < car.pos.y + car.shape.length) ||
+      // Hit car moving from left to right or vice versa being on same level of higher
+      (player.pos.x + moveX === car.pos.x &&
+        player.pos.y + moveY <= car.pos.y &&
+        player.pos.y + moveY + player.shape.length > car.pos.y) ||
+      // Hit car moving from top to bottom
+      player.pos.y + moveY + player.shape.length === car.pos.y ||
+      // Hit car moving from bottom to top
+      player.pos.y + moveY === car.pos.y + car.shape.length
+    ) {
+      return car;
+    }
+  }
+  return null;
 };
 
 export const CellType = {

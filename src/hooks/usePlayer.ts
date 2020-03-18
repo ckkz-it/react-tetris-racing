@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Car } from '../interfaces';
+import { Car, Coordinate } from '../interfaces';
 import { CAR_SHAPE, STAGE_HEIGHT, STAGE_WIDTH } from '../helpers';
 
 const usePlayer = () => {
@@ -9,8 +9,8 @@ const usePlayer = () => {
     shape: CAR_SHAPE,
   });
 
-  const updatePlayerPos = ({ x, y }: { x: number; y: number }) => {
-    setPlayer((prev: Car) => ({
+  const updatePlayerPos = ({ x, y }: Coordinate) => {
+    setPlayer(prev => ({
       ...prev,
       pos: { x: prev.pos.x + x, y: prev.pos.y + y },
     }));
