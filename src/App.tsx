@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 
 import './App.css';
-import bgImage from './assets/img/bg.jpg';
 import Stage from './components/Stage';
 import useStage from './hooks/useStage';
 import usePlayer from './hooks/usePlayer';
@@ -22,28 +20,8 @@ import { useInterval } from './hooks/useInterval';
 import { Car, Coordinate } from './interfaces';
 import Button from './components/Button';
 import Display from './components/Display';
-
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
-  padding-top: 50px;
-  background-image: url(${bgImage});
-  background-size: cover;
-`;
-
-const Aside = styled.aside`
-  display: flex;
-  flex-direction: column;
-  margin-left: 50px;
-  width: 10%;
-
-  button,
-  div {
-    margin-bottom: 20px;
-  }
-`;
+import Wrapper from './components/Wrapper';
+import Aside from './components/Aside';
 
 let timeoutId: number | null;
 
@@ -87,7 +65,7 @@ const App: React.FC = () => {
 
   const getRandomSide = () => (Math.random() > 0.5 ? STAGE_WIDTH - 5 : 2);
 
-  const startGame = () => {
+  const initGame = () => {
     window.addEventListener('keydown', onKeyDown);
   };
 
@@ -143,7 +121,7 @@ const App: React.FC = () => {
     setCars(newCars);
   };
 
-  startGame();
+  initGame();
 
   useInterval(
     () => {

@@ -10,6 +10,14 @@ const StyledDisplay = styled.div`
   color: #999;
   background: #000;
   font-size: 0.9rem;
+
+  @media screen and (max-width: 1200px) {
+    padding: 15px;
+  }
+
+  @media screen and (max-width: 900px) {
+    padding: 10px;
+  }
 `;
 
 export default StyledDisplay;

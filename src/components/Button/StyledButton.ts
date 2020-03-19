@@ -15,6 +15,14 @@ const StyledButton = styled.button`
     cursor: default;
     color: #868485;
   }
+
+  @media screen and (max-width: 1200px) {
+    padding: 15px;
+  }
+
+  @media screen and (max-width: 900px) {
+    padding: 10px;
+  }
 `;
 
 export default StyledButton;

@@ -22,6 +22,14 @@ const StyledGameOver = styled.div`
     font-size: 1.5rem;
     color: #cacaca;
   }
+
+  @media screen and (max-width: 1200px) {
+    padding: 20px;
+  }
+
+  @media screen and (max-width: 900px) {
+    padding: 10px;
+  }
 `;
 
 export default StyledGameOver;
