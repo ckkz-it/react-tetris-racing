@@ -3,7 +3,7 @@ import { Car, Coordinate, Stage } from './interfaces';
 export const STAGE_WIDTH = 10;
 export const STAGE_HEIGHT = 18;
 export const INITIAL_SPEED = 500;
-export const HIGH_SCORE_KEY = 'tetrisHighScore'
+export const HIGH_SCORE_KEY = 'tetrisHighScore';
 
 export const CAR_SHAPE = [
   [0, 1, 0],
@@ -95,7 +95,16 @@ export const checkCarsCollision = (player: Car, cars: Car[], { x: moveX, y: move
   return null;
 };
 
+export const isMobile = () => window.innerWidth < 900;
+
 export const CellType = {
   DARK: '/img/dark_texture.jpg',
   LIGHT: '/img/light_texture.jpg',
+};
+
+export const ArrowCode = {
+  ArrowLeft: '\u2190',
+  ArrowUp: '\u2191',
+  ArrowDown: '\u2193',
+  ArrowRight: '\u2192',
 };

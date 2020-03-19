@@ -12,6 +12,7 @@ import {
   EXPLOSION_ITERATIONS,
   HIGH_SCORE_KEY,
   INITIAL_SPEED,
+  isMobile,
   MOVE_POSITION,
   STAGE_HEIGHT,
   STAGE_WIDTH,
@@ -22,6 +23,7 @@ import Button from './components/Button';
 import Display from './components/Display';
 import Wrapper from './components/Wrapper';
 import Aside from './components/Aside';
+import Keyboard from './components/Keyboard';
 
 let timeoutId: number | null;
 
@@ -175,6 +177,7 @@ const App: React.FC = () => {
         {gameOver && explosion.iteration === EXPLOSION_ITERATIONS && (
           <Button callback={() => restartGame()} text={'Restart'} />
         )}
+        {isMobile() && <Keyboard onKeyDown={key => movePlayer(key)} />}
       </Aside>
     </Wrapper>
   );

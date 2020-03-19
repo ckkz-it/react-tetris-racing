@@ -14,6 +14,10 @@ const Aside = styled.aside`
   @media screen and (max-width: 1200px) {
     width: 15%;
   }
+
+  @media screen and (max-width: 700px) {
+    width: 20%;
+  }
 `;
 
 export default Aside;
