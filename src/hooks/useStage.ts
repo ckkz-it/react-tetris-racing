@@ -1,10 +1,25 @@
 import { useEffect, useState } from 'react';
 
-import { createStage, STAGE_HEIGHT } from '../helpers';
+import { createStage, EXPLOSION_SHAPES, STAGE_HEIGHT } from '../helpers';
 import { Car, Coordinate, Stage } from '../interfaces';
 
-const useStage = (player: Car, borders: Coordinate[], cars: Car[]) => {
+const useStage = (
+  player: Car,
+  borders: Coordinate[],
+  cars: Car[],
+  explosion: { car: Car | null; iteration: number },
+) => {
   const [stage, setStage] = useState(createStage());
+
+  const drawOnStage = (newStage: Stage, shape: number[][], pos: Coordinate) => {
+    shape.forEach((row, y) => {
+      row.forEach((value, x) => {
+        if (value !== 0 && y + pos.y >= 0 && y + pos.y < STAGE_HEIGHT) {
+          newStage[y + pos.y][x + pos.x] = 1;
+        }
+      });
+    });
+  };
 
   useEffect(() => {
     const updateStage = (prevStage: Stage): Stage => {
@@ -12,13 +27,7 @@ const useStage = (player: Car, borders: Coordinate[], cars: Car[]) => {
       const newStage = prevStage.map(row => row.map(() => 0));
 
       // Draw Player
-      player.shape.forEach((row, y) =>
-        row.forEach((value, x) => {
-          if (value !== 0) {
-            newStage[y + player.pos.y][x + player.pos.x] = 1;
-          }
-        }),
-      );
+      drawOnStage(newStage, player.shape, player.pos);
 
       // Draw Borders
       borders.forEach(b => {
@@ -28,21 +37,39 @@ const useStage = (player: Car, borders: Coordinate[], cars: Car[]) => {
       });
 
       // Draw Cars
-      cars.forEach(car =>
-        car.shape.forEach((row, y) => {
-          row.forEach((value, x) => {
-            if (value !== 0 && y + car.pos.y >= 0 && y + car.pos.y < STAGE_HEIGHT) {
-              newStage[y + car.pos.y][x + car.pos.x] = 1;
-            }
-          });
-        }),
-      );
+      cars.forEach(car => drawOnStage(newStage, car.shape, car.pos));
 
       return newStage;
     };
 
     setStage(prev => updateStage(prev));
   }, [player, borders, cars]);
+
+  useEffect(() => {
+    if (explosion.car !== null) {
+      setStage(prevStage => {
+        const car = explosion.car as Car;
+        const newStage = [...prevStage];
+
+        // Clear Player
+        player.shape.forEach((row, y) =>
+          row.forEach((value, x) => {
+            newStage[y + player.pos.y][x + player.pos.x] = 0;
+          }),
+        );
+
+        // Clear Car
+        drawOnStage(newStage, car.shape, car.pos);
+
+        // Draw Explosion
+        const shapeNumber = explosion.iteration % (EXPLOSION_SHAPES.length - 1);
+        const shape = EXPLOSION_SHAPES[shapeNumber];
+        drawOnStage(newStage, shape, car.pos);
+
+        return newStage;
+      });
+    }
+  }, [explosion.car, explosion.iteration, player.pos.x, player.pos.y]);
 
   return [stage, setStage] as any;
 };

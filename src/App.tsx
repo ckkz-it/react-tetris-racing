@@ -36,11 +36,13 @@ const App: React.FC = () => {
   const [secondsElapsed, setSecondsElapsed] = useState<number>(0);
   const [cars, setCars] = useState<Car[]>([]);
   const [borders, setBorders] = useState<Coordinate[]>([]);
+  const [explosion, setExplosion] = useState<{ car: Car | null; iteration: number }>({ car: null, iteration: 0 });
+  const [gameOver, setGameOver] = useState(false);
 
   const [ticks, setTicks] = useState(0);
 
   const [player, updatePlayerPos] = usePlayer();
-  const [stage] = useStage(player, borders, cars);
+  const [stage] = useStage(player, borders, cars, explosion);
 
   const movePlayer = (key: string) => {
     const movePosition = MOVE_POSITION[key];
@@ -49,8 +51,8 @@ const App: React.FC = () => {
       if (!car) {
         updatePlayerPos(movePosition);
       } else {
-        console.log(car);
-        setSpeed(null);
+        setGameOver(true);
+        setExplosion({ car, iteration: 0 });
       }
     }
   };
@@ -93,24 +95,39 @@ const App: React.FC = () => {
 
   startGame();
 
-  useInterval(() => {
-    setSecondsElapsed(t => t + 1);
-  }, speed && 1000);
+  useInterval(
+    () => {
+      setSecondsElapsed(t => t + 1);
+    },
+    gameOver ? null : 1000,
+  );
 
-  useInterval(() => {
-    produceBorders();
-    produceCars();
+  useInterval(
+    () => {
+      produceBorders();
+      produceCars();
 
-    setTicks(t => t + 1);
+      setTicks(t => t + 1);
 
-    if (ticks !== 0 && ticks % 120 === 0 && speed !== null) {
-      setSpeed(speed / 1.5);
-    }
+      // Increase speed every 30 seconds
+      if (speed !== null && secondsElapsed !== 0 && secondsElapsed % 30 === 0) {
+        setSpeed(speed / 1.5);
+      }
+      const car = checkCarsCollision(player, cars, { x: 0, y: -1 });
+      if (car) {
+        setGameOver(true);
+        setExplosion({ car, iteration: 0 });
+      }
+    },
+    gameOver ? null : speed,
+  );
 
-    if (checkCarsCollision(player, cars, { x: 0, y: 0 })) {
-      setSpeed(null);
-    }
-  }, speed);
+  useInterval(
+    () => {
+      setExplosion(e => ({ ...e, iteration: e.iteration + 1 }));
+    },
+    gameOver && explosion.iteration < 8 ? 100 : null,
+  );
 
   return (
     <>

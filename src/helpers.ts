@@ -16,6 +16,38 @@ export const MOVE_POSITION: { [key: string]: Coordinate } = {
   ArrowLeft: { x: -3, y: 0 },
   ArrowRight: { x: 3, y: 0 },
 };
+export const EXPLOSION_SHAPES = [
+  [
+    [0, 1, 1],
+    [1, 1, 1],
+    [1, 1, 0],
+    [1, 0, 1],
+  ],
+  [
+    [0, 1, 0],
+    [1, 1, 0],
+    [1, 1, 1],
+    [1, 0, 0],
+  ],
+  [
+    [0, 1, 1],
+    [0, 0, 1],
+    [1, 1, 0],
+    [1, 1, 1],
+  ],
+  [
+    [0, 1, 0],
+    [1, 1, 1],
+    [1, 0, 0],
+    [1, 1, 1],
+  ],
+  [
+    [0, 1, 0],
+    [1, 0, 1],
+    [0, 1, 1],
+    [1, 0, 0],
+  ],
+];
 
 export const createStage = (): Stage => Array.from(new Array(STAGE_HEIGHT), () => new Array(STAGE_WIDTH).fill(0));
 
@@ -49,18 +81,11 @@ export const checkWallCollision = (player: Car, stage: Stage, { x: moveX, y: mov
 export const checkCarsCollision = (player: Car, cars: Car[], { x: moveX, y: moveY }: Coordinate) => {
   for (const car of cars) {
     if (
+      player.pos.x + moveX === car.pos.x &&
       // Hit car moving from left to right or vice versa being on same level of lower
-      (player.pos.x + moveX === car.pos.x &&
-        player.pos.y + moveY >= car.pos.y &&
-        player.pos.y + moveY < car.pos.y + car.shape.length) ||
-      // Hit car moving from left to right or vice versa being on same level of higher
-      (player.pos.x + moveX === car.pos.x &&
-        player.pos.y + moveY <= car.pos.y &&
-        player.pos.y + moveY + player.shape.length > car.pos.y) ||
-      // Hit car moving from top to bottom
-      player.pos.y + moveY + player.shape.length === car.pos.y ||
-      // Hit car moving from bottom to top
-      player.pos.y + moveY === car.pos.y + car.shape.length
+      ((player.pos.y + moveY >= car.pos.y && player.pos.y + moveY < car.pos.y + car.shape.length) ||
+        // Hit car moving from left to right or vice versa being on same level of higher
+        (player.pos.y + moveY <= car.pos.y && player.pos.y + moveY + player.shape.length > car.pos.y))
     ) {
       return car;
     }
