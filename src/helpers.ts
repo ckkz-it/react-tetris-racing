@@ -2,7 +2,7 @@ import { Car, Coordinate, Stage } from './interfaces';
 
 export const STAGE_WIDTH = 10;
 export const STAGE_HEIGHT = 18;
-export const INITIAL_SPEED = 500;
+export const INITIAL_SPEED = 400;
 export const HIGH_SCORE_KEY = 'tetrisHighScore';
 
 export const CAR_SHAPE = [

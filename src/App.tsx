@@ -141,14 +141,15 @@ const App: React.FC = () => {
 
       // Increase speed every 30 seconds
       if (speed !== null && secondsElapsed !== 0 && secondsElapsed % 30 === 0) {
-        setSpeed(speed / 1.5);
+        setSpeed(speed / 1.3);
       }
       const car = checkCarsCollision(player, cars, { x: 0, y: -1 });
       if (car) {
         endGame(car);
+        return;
       }
 
-      setScore(s => s + (1000 / (speed as number)) * 10);
+      setScore(s => Math.floor(s + (1000 / (speed as number)) * 10));
     },
     gameOver ? null : speed,
   );
