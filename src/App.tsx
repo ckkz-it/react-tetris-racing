@@ -160,7 +160,7 @@ const App: React.FC = () => {
 
   return (
     <Wrapper>
-      <Stage stage={stage} />
+      <Stage stage={stage} gameOver={gameOver && explosion.iteration === EXPLOSION_ITERATIONS} />
       <Aside>
         <Display text={`Score: ${score}`} />
         <Button
