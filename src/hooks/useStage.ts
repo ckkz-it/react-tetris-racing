@@ -11,11 +11,17 @@ const useStage = (
 ) => {
   const [stage, setStage] = useState(createStage());
 
-  const drawOnStage = (newStage: Stage, shape: number[][], pos: Coordinate) => {
+  const drawOnStage = (newStage: Stage, shape: number[][], pos: Coordinate, clear = false) => {
     shape.forEach((row, y) => {
       row.forEach((value, x) => {
-        if (value !== 0 && y + pos.y >= 0 && y + pos.y < STAGE_HEIGHT) {
-          newStage[y + pos.y][x + pos.x] = 1;
+        if (clear) {
+          if (y + pos.y >= 0 && y + pos.y < STAGE_HEIGHT) {
+            newStage[y + pos.y][x + pos.x] = 0;
+          }
+        } else {
+          if (value !== 0 && y + pos.y >= 0 && y + pos.y < STAGE_HEIGHT) {
+            newStage[y + pos.y][x + pos.x] = 1;
+          }
         }
       });
     });
@@ -52,14 +58,10 @@ const useStage = (
         const newStage = [...prevStage];
 
         // Clear Player
-        player.shape.forEach((row, y) =>
-          row.forEach((value, x) => {
-            newStage[y + player.pos.y][x + player.pos.x] = 0;
-          }),
-        );
+        drawOnStage(newStage, player.shape, player.pos, true);
 
-        // Clear Car
-        drawOnStage(newStage, car.shape, car.pos);
+        // Clear area around Car
+        drawOnStage(newStage, car.shape, car.pos, true);
 
         // Draw Explosion
         const shapeNumber = explosion.iteration % (EXPLOSION_SHAPES.length - 1);

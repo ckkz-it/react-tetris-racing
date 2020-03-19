@@ -126,7 +126,7 @@ const App: React.FC = () => {
     () => {
       setExplosion(e => ({ ...e, iteration: e.iteration + 1 }));
     },
-    gameOver && explosion.iteration < 8 ? 100 : null,
+    gameOver && explosion.iteration < 10 ? 70 : null,
   );
 
   return (
