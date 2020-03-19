@@ -5,7 +5,7 @@ import Stage from './components/Stage';
 import useStage from './hooks/useStage';
 import usePlayer from './hooks/usePlayer';
 import {
-  CAR_SHAPE,
+  CAR_SHAPES,
   checkCarsCollision,
   checkWallCollision,
   createBorders,
@@ -14,6 +14,7 @@ import {
   INITIAL_SPEED,
   isMobile,
   MOVE_POSITION,
+  RANDOM_CAR_SHAPES,
   STAGE_HEIGHT,
   STAGE_WIDTH,
 } from './helpers';
@@ -118,7 +119,13 @@ const App: React.FC = () => {
       .filter(c => c.pos.y < STAGE_HEIGHT)
       .map(c => ({ ...c, pos: { ...c.pos, y: c.pos.y + 1 } }));
     if (ticks % 10 === 0) {
-      newCars.push({ shape: CAR_SHAPE, pos: { x: getRandomSide(), y: -3 } });
+      let sh: number[][];
+      if (RANDOM_CAR_SHAPES) {
+        sh = CAR_SHAPES[Math.floor(Math.random() * CAR_SHAPES.length)];
+      } else {
+        sh = CAR_SHAPES[0];
+      }
+      newCars.push({ shape: sh, pos: { x: getRandomSide(), y: -3 } });
     }
     setCars(newCars);
   };
@@ -141,7 +148,7 @@ const App: React.FC = () => {
 
       // Increase speed every 30 seconds
       if (speed !== null && secondsElapsed !== 0 && secondsElapsed % 30 === 0) {
-        setSpeed(speed / 1.3);
+        setSpeed(speed / 1.2);
       }
       const car = checkCarsCollision(player, cars, { x: 0, y: -1 });
       if (car) {

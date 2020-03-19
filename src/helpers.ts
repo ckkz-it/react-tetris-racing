@@ -4,12 +4,28 @@ export const STAGE_WIDTH = 10;
 export const STAGE_HEIGHT = 18;
 export const INITIAL_SPEED = 400;
 export const HIGH_SCORE_KEY = 'tetrisHighScore';
+export const RANDOM_CAR_SHAPES = false;
 
-export const CAR_SHAPE = [
-  [0, 1, 0],
-  [1, 1, 1],
-  [0, 1, 0],
-  [1, 0, 1],
+export const CAR_SHAPES = [
+  [
+    [0, 1, 0],
+    [1, 1, 1],
+    [0, 1, 0],
+    [1, 0, 1],
+  ],
+  [
+    [0, 1, 0],
+    [1, 1, 1],
+    [1, 1, 1],
+    [0, 1, 0],
+    [1, 1, 1],
+  ],
+  [
+    [1, 0, 1],
+    [1, 1, 1],
+    [0, 1, 0],
+    [1, 0, 1],
+  ],
 ];
 export const MOVE_POSITION: { [key: string]: Coordinate } = {
   ArrowUp: { x: 0, y: -1 },
