@@ -11,6 +11,7 @@ import {
   checkCarsCollision,
   checkWallCollision,
   createBorders,
+  EXPLOSION_ITERATIONS,
   INITIAL_SPEED,
   MOVE_POSITION,
   STAGE_HEIGHT,
@@ -18,6 +19,8 @@ import {
 } from './helpers';
 import { useInterval } from './hooks/useInterval';
 import { Car, Coordinate } from './interfaces';
+import Button from './components/Button';
+import Display from './components/Display';
 
 const Wrapper = styled.div`
   display: flex;
@@ -29,11 +32,24 @@ const Wrapper = styled.div`
   background-size: cover;
 `;
 
+const Aside = styled.aside`
+  display: flex;
+  flex-direction: column;
+  margin-left: 50px;
+  width: 10%;
+
+  button,
+  div {
+    margin-bottom: 20px;
+  }
+`;
+
 let timeoutId: number | null;
 
 const App: React.FC = () => {
   const [speed, setSpeed] = useState<number | null>(INITIAL_SPEED);
   const [secondsElapsed, setSecondsElapsed] = useState<number>(0);
+  const [score, setScore] = useState<number>(0);
   const [cars, setCars] = useState<Car[]>([]);
   const [borders, setBorders] = useState<Coordinate[]>([]);
   const [explosion, setExplosion] = useState<{ car: Car | null; iteration: number }>({ car: null, iteration: 0 });
@@ -41,7 +57,7 @@ const App: React.FC = () => {
 
   const [ticks, setTicks] = useState(0);
 
-  const [player, updatePlayerPos] = usePlayer();
+  const [player, updatePlayerPos, resetPlayer] = usePlayer();
   const [stage] = useStage(player, borders, cars, explosion);
 
   const movePlayer = (key: string) => {
@@ -73,6 +89,17 @@ const App: React.FC = () => {
 
   const startGame = () => {
     window.addEventListener('keydown', onKeyDown);
+  };
+
+  const restartGame = () => {
+    setGameOver(false);
+    setExplosion({ car: null, iteration: 0 });
+    setTicks(0);
+    setSecondsElapsed(0);
+    resetPlayer();
+    setSpeed(INITIAL_SPEED);
+    setCars([]);
+    setBorders([]);
   };
 
   const produceBorders = () => {
@@ -118,6 +145,8 @@ const App: React.FC = () => {
         setGameOver(true);
         setExplosion({ car, iteration: 0 });
       }
+
+      setScore(s => s + (1000 / (speed as number)) * 10);
     },
     gameOver ? null : speed,
   );
@@ -126,16 +155,24 @@ const App: React.FC = () => {
     () => {
       setExplosion(e => ({ ...e, iteration: e.iteration + 1 }));
     },
-    gameOver && explosion.iteration < 10 ? 70 : null,
+    gameOver && explosion.iteration < EXPLOSION_ITERATIONS ? 70 : null,
   );
 
   return (
-    <>
-      <Wrapper>
-        <Stage stage={stage} />
-      </Wrapper>
-      <button onClick={() => setSpeed(speed ? null : INITIAL_SPEED)}>TRIGGER</button>
-    </>
+    <Wrapper>
+      <Stage stage={stage} />
+      <Aside>
+        <Display text={`Score: ${score}`} />
+        <Button
+          callback={() => setSpeed(speed ? null : INITIAL_SPEED)}
+          text={speed === null ? 'Resume' : 'Pause'}
+          disabled={gameOver}
+        />
+        {gameOver && explosion.iteration === EXPLOSION_ITERATIONS && (
+          <Button callback={() => restartGame()} text={'Restart'} />
+        )}
+      </Aside>
+    </Wrapper>
   );
 };
 

@@ -16,6 +16,7 @@ export const MOVE_POSITION: { [key: string]: Coordinate } = {
   ArrowLeft: { x: -3, y: 0 },
   ArrowRight: { x: 3, y: 0 },
 };
+export const EXPLOSION_ITERATIONS = 10;
 export const EXPLOSION_SHAPES = [
   [
     [0, 0, 1],

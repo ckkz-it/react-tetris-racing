@@ -71,7 +71,7 @@ const useStage = (
         return newStage;
       });
     }
-  }, [explosion.car, explosion.iteration, player.pos.x, player.pos.y]);
+  }, [explosion.car, explosion.iteration, player]);
 
   return [stage, setStage] as any;
 };
