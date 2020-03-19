@@ -10,6 +10,7 @@ import {
   checkWallCollision,
   createBorders,
   EXPLOSION_ITERATIONS,
+  getRandomInt,
   HIGH_SCORE_KEY,
   INITIAL_SPEED,
   isMobile,
@@ -118,7 +119,8 @@ const App: React.FC = () => {
     const newCars = (cars as Car[])
       .filter(c => c.pos.y < STAGE_HEIGHT)
       .map(c => ({ ...c, pos: { ...c.pos, y: c.pos.y + 1 } }));
-    if (ticks % 10 === 0) {
+    const lastSpawnedCar = newCars[newCars.length - 1];
+    if (newCars.length === 0 || (ticks % getRandomInt(8, 10) === 0 && lastSpawnedCar.pos.y > 4)) {
       let sh: number[][];
       if (RANDOM_CAR_SHAPES) {
         sh = CAR_SHAPES[Math.floor(Math.random() * CAR_SHAPES.length)];
@@ -148,7 +150,7 @@ const App: React.FC = () => {
 
       // Increase speed every 30 seconds
       if (speed !== null && secondsElapsed !== 0 && secondsElapsed % 30 === 0) {
-        setSpeed(speed / 1.2);
+        setSpeed(speed / 1.1);
       }
       const car = checkCarsCollision(player, cars, { x: 0, y: -1 });
       if (car) {
