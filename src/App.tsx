@@ -12,6 +12,7 @@ import {
   checkWallCollision,
   createBorders,
   EXPLOSION_ITERATIONS,
+  HIGH_SCORE_KEY,
   INITIAL_SPEED,
   MOVE_POSITION,
   STAGE_HEIGHT,
@@ -67,8 +68,7 @@ const App: React.FC = () => {
       if (!car) {
         updatePlayerPos(movePosition);
       } else {
-        setGameOver(true);
-        setExplosion({ car, iteration: 0 });
+        endGame(car);
       }
     }
   };
@@ -95,11 +95,34 @@ const App: React.FC = () => {
     setGameOver(false);
     setExplosion({ car: null, iteration: 0 });
     setTicks(0);
+    setScore(0);
     setSecondsElapsed(0);
     resetPlayer();
     setSpeed(INITIAL_SPEED);
     setCars([]);
     setBorders([]);
+  };
+
+  const endGame = (car: Car) => {
+    setGameOver(true);
+    setExplosion({ car, iteration: 0 });
+    saveHighScore();
+  };
+
+  const saveHighScore = () => {
+    const hs = window.localStorage.getItem(HIGH_SCORE_KEY);
+    if (hs) {
+      if (Number(hs) < score) {
+        window.localStorage.setItem(HIGH_SCORE_KEY, score.toString());
+      }
+    } else {
+      window.localStorage.setItem(HIGH_SCORE_KEY, score.toString());
+    }
+  };
+
+  const getHighScore = () => {
+    const hs = window.localStorage.getItem(HIGH_SCORE_KEY);
+    return hs ? Number(hs) : 0;
   };
 
   const produceBorders = () => {
@@ -142,8 +165,7 @@ const App: React.FC = () => {
       }
       const car = checkCarsCollision(player, cars, { x: 0, y: -1 });
       if (car) {
-        setGameOver(true);
-        setExplosion({ car, iteration: 0 });
+        endGame(car);
       }
 
       setScore(s => s + (1000 / (speed as number)) * 10);
@@ -160,7 +182,11 @@ const App: React.FC = () => {
 
   return (
     <Wrapper>
-      <Stage stage={stage} gameOver={gameOver && explosion.iteration === EXPLOSION_ITERATIONS} />
+      <Stage
+        stage={stage}
+        gameOver={gameOver && explosion.iteration === EXPLOSION_ITERATIONS}
+        highScore={getHighScore()}
+      />
       <Aside>
         <Display text={`Score: ${score}`} />
         <Button

@@ -9,16 +9,17 @@ import GameOver from '../GameOver';
 interface Props {
   stage: IStage;
   gameOver: boolean;
+  highScore: number;
 }
 
-const Stage: React.FC<Props> = ({ stage, gameOver }) => {
+const Stage: React.FC<Props> = ({ stage, gameOver, highScore }) => {
   const cells = stage.map((row, y) =>
     row.map((value, x) => <Cell key={`${y}${x}${value}`} type={value !== 0 ? CellType.DARK : CellType.LIGHT} />),
   );
   return (
     <StyledStage width={STAGE_WIDTH} height={STAGE_HEIGHT}>
       {cells}
-      {gameOver && <GameOver />}
+      {gameOver && <GameOver highScore={highScore} />}
     </StyledStage>
   );
 };

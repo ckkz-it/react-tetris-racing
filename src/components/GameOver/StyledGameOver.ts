@@ -8,11 +8,20 @@ const StyledGameOver = styled.div`
   padding: 40px;
   pointer-events: none;
   white-space: nowrap;
-  font-size: 2rem;
   background: #000000;
   border-radius: 5px;
-  color: #b90000;
   opacity: 0.8;
+  text-align: center;
+
+  div:first-child {
+    font-size: 1.7rem;
+    color: #b90000;
+  }
+
+  div {
+    font-size: 1.5rem;
+    color: #cacaca;
+  }
 `;
 
 export default StyledGameOver;

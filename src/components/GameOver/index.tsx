@@ -5,6 +5,11 @@ interface Props {
   highScore: number;
 }
 
-const GameOver = () => <StyledGameOver>Game Over</StyledGameOver>;
+const GameOver = ({ highScore }: Props) => (
+  <StyledGameOver>
+    <div>GAME OVER</div>
+    <div>High Score: {highScore}</div>
+  </StyledGameOver>
+);
 
 export default GameOver;
