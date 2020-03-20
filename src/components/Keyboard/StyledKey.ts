@@ -9,6 +9,7 @@ export const StyledKey = styled.button`
   margin: 0 !important;
   outline: none;
   font-size: 1.2rem;
+  touch-action: manipulation;
 `;
 
 export const KeyWrapper = styled.div`

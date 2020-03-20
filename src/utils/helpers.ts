@@ -45,7 +45,7 @@ export const checkCarsCollision = (player: Car, cars: Car[], { x: moveX, y: move
   return null;
 };
 
-export const isMobile = () => window.innerWidth < 900;
+export const isMobile = () => window.innerWidth < 756;
 
 export const getRandomInt = (min: number, max: number) => {
   min = Math.ceil(min);

@@ -18,10 +18,20 @@ const StyledButton = styled.button`
 
   @media screen and (max-width: 1200px) {
     padding: 15px;
+    font-size: 0.9rem;
   }
 
   @media screen and (max-width: 900px) {
     padding: 10px;
+    font-size: 0.8rem;
+  }
+
+  @media screen and (max-width: 756px) {
+    font-size: 1.2rem;
+  }
+
+  @media screen and (max-width: 596px) {
+    font-size: 1.1rem;
   }
 `;
 

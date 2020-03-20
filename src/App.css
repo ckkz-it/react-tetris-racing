@@ -16,33 +16,3 @@ html {
   font-family: Tetris, sans-serif;
   box-sizing: border-box;
 }
-
-@media screen and (max-width: 1200px) {
-  html {
-    font-size: 14px;
-  }
-}
-
-@media screen and (max-width: 900px) {
-  html {
-    font-size: 12px;
-  }
-}
-
-@media screen and (max-width: 756px) {
-  html {
-    font-size: 10px;
-  }
-}
-
-@media screen and (max-width: 596px) {
-  html {
-    font-size: 7px;
-  }
-}
-
-@media screen and (max-width: 450px) {
-  html {
-    font-size: 5px;
-  }
-}

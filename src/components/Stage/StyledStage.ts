@@ -15,6 +15,21 @@ const StyledStage = styled.div<Props>`
   border-bottom-style: inset;
   border-width: 10px;
   border-color: #d2ffd6 #c7f1cc #caf4d0 #a0bda4;
+
+  @media screen and (max-width: 756px) {
+    transform: scale(1.2);
+    margin-bottom: 30px;
+  }
+
+  @media screen and (max-width: 596px) {
+    transform: scale(1.5);
+    margin-bottom: 50px;
+  }
+
+  @media screen and (max-width: 450px) {
+    transform: scale(1.8);
+    margin-bottom: 70px;
+  }
 `;
 
 export default StyledStage;

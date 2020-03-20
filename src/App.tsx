@@ -153,9 +153,10 @@ const App: React.FC = () => {
         highScore={getHighScore()}
       />
       <Aside>
+        {isMobile() && <Keyboard onKeyDown={key => movePlayer(key)} />}
         <Display text={`Score: ${score}`} />
         {getHighScore() && gameOver && explosion.iteration === constants.EXPLOSION_ITERATIONS && (
-          <Button callback={() => resetHighScore()} text={'Reset High score'} />
+          <Button callback={() => resetHighScore()} text={'Reset High Score'} />
         )}
         <Button
           callback={() => setSpeed(speed ? null : constants.INITIAL_SPEED)}
@@ -165,8 +166,8 @@ const App: React.FC = () => {
         {gameOver && explosion.iteration === constants.EXPLOSION_ITERATIONS && (
           <Button callback={() => restartGame()} text={'Restart'} />
         )}
-        {isMobile() && <Keyboard onKeyDown={key => movePlayer(key)} />}
       </Aside>
+      {isMobile()}
     </Wrapper>
   );
 };

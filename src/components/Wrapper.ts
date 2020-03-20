@@ -9,6 +9,14 @@ const Wrapper = styled.div`
   padding-top: 50px;
   background-image: url(${bgImage});
   background-size: cover;
+
+  @media screen and (max-width: 756px) {
+    padding-top: 70px;
+  }
+
+  @media screen and (max-width: 596px) {
+    padding-top: 90px;
+  }
 `;
 
 export default Wrapper;

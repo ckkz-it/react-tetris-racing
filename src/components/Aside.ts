@@ -11,8 +11,14 @@ const Aside = styled.aside`
     margin-bottom: 20px;
   }
 
-  @media screen and (max-width: 700px) {
-    width: 20%;
+  @media screen and (max-width: 756px) {
+    width: 100%;
+    margin: 50px 50px 0 50px;
+
+    button,
+    div {
+      margin-bottom: 10px;
+    }
   }
 `;
 
