@@ -24,6 +24,7 @@ export const useScore: Hook<[number, UseStateAction<number>, () => number, Callb
 
   const resetHighScore = () => {
     window.localStorage.removeItem(HIGH_SCORE_KEY);
+    setScore(0);
   };
 
   return [score, setScore, getHighScore, saveHighScore, resetHighScore];
