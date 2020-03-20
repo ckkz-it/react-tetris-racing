@@ -25,6 +25,7 @@ const App: React.FC = () => {
   const [explosion, setExplosion] = useState<Explosion>({ car: null, iteration: 0 });
   const [gameOver, setGameOver] = useState(false);
   const [ticks, setTicks] = useState(0);
+  const [gameStarted, setGameStarted] = useState(false);
 
   const [player, updatePlayerPos, resetPlayer] = usePlayer();
   const [stage] = useStage(player, borders, cars, explosion);
@@ -32,7 +33,7 @@ const App: React.FC = () => {
 
   const _movePlayer = (key: string) => {
     const movePosition = constants.MOVE_POSITION[key];
-    if (speed !== null && !checkWallCollision(player, stage, movePosition)) {
+    if (speed !== null && !gameOver && !checkWallCollision(player, stage, movePosition)) {
       const car = checkCarsCollision(player, cars, movePosition);
       if (!car) {
         updatePlayerPos(movePosition);
@@ -55,6 +56,7 @@ const App: React.FC = () => {
 
   const startGame = () => {
     setSpeed(constants.INITIAL_SPEED);
+    setGameStarted(true);
   };
 
   const restartGame = () => {
@@ -151,17 +153,18 @@ const App: React.FC = () => {
         stage={stage}
         gameOver={gameOver && explosion.iteration === constants.EXPLOSION_ITERATIONS}
         highScore={getHighScore()}
+        gameStarted={gameStarted}
       />
       <Aside>
         {isMobile() && <Keyboard onKeyDown={key => movePlayer(key)} />}
         <Display text={`Score: ${score}`} />
-        {getHighScore() && gameOver && explosion.iteration === constants.EXPLOSION_ITERATIONS && (
+        {gameOver && getHighScore() && explosion.iteration === constants.EXPLOSION_ITERATIONS && (
           <Button callback={() => resetHighScore()} text={'Reset High Score'} />
         )}
-        {ticks === 0 && <Button callback={() => startGame()} text={'Start Game'} />}
-        {ticks !== 0 && (
+        {!gameStarted && <Button callback={() => startGame()} text={'Start Game'} />}
+        {gameStarted && (
           <Button
-            callback={() => setSpeed(speed ? null : constants.INITIAL_SPEED)}
+            callback={() => !gameOver && setSpeed(speed ? null : constants.INITIAL_SPEED)}
             text={speed === null ? 'Resume' : 'Pause'}
             disabled={gameOver}
           />
@@ -170,7 +173,6 @@ const App: React.FC = () => {
           <Button callback={() => restartGame()} text={'Restart'} />
         )}
       </Aside>
-      {isMobile()}
     </Wrapper>
   );
 };

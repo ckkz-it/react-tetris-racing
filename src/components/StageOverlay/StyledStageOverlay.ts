@@ -20,6 +20,18 @@ const StyledStageOverlay = styled.div`
   @media screen and (max-width: 900px) {
     padding: 10px;
   }
+
+  @media screen and (max-width: 756px) {
+    padding: 8px;
+  }
+
+  @media screen and (max-width: 596px) {
+    padding: 5px;
+  }
+
+  @media screen and (max-width: 400px) {
+    padding: 3px;
+  }
 `;
 
 export default StyledStageOverlay;

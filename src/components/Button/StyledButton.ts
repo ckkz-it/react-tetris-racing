@@ -10,6 +10,8 @@ const StyledButton = styled.button`
   font-size: 1rem;
   background-color: #2d2626;
   color: #fff;
+  font-family: Tetris, sans-serif;
+  touch-action: manipulation;
 
   &[disabled] {
     cursor: default;

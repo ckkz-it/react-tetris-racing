@@ -19,11 +19,13 @@ const StyledStage = styled.div<Props>`
   @media screen and (max-width: 756px) {
     transform: scale(1.2);
     margin-bottom: 30px;
+    border-width: 8px;
   }
 
   @media screen and (max-width: 596px) {
     transform: scale(1.5);
     margin-bottom: 50px;
+    border-width: 5px;
   }
 
   @media screen and (max-width: 450px) {
