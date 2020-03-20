@@ -4,6 +4,7 @@ import { Hook } from '../interfaces';
 
 type cb = () => void;
 
+// https://overreacted.io/making-setinterval-declarative-with-react-hooks/
 export const useInterval: Hook<void> = (callback: cb, delay: number | null) => {
   const savedCallback = useRef<cb>();
 

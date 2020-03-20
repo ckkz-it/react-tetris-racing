@@ -1,32 +1,24 @@
 import React, { useState } from 'react';
 
 import './App.css';
-import Stage from './components/Stage';
 import { useStage } from './hooks/useStage';
 import { usePlayer } from './hooks/usePlayer';
-import { checkCarsCollision, checkWallCollision, createBorders, getRandomInt, isMobile } from './helpers';
 import { useInterval } from './hooks/useInterval';
+import { useScore } from './hooks/useScore';
+import { checkCarsCollision, checkWallCollision, createBorders, getRandomInt, isMobile } from './helpers';
+import * as constants from './constants';
 import { Car, Coordinate, Explosion } from './interfaces';
+import Stage from './components/Stage';
 import Button from './components/Button';
 import Display from './components/Display';
 import Wrapper from './components/Wrapper';
 import Aside from './components/Aside';
 import Keyboard from './components/Keyboard';
-import { useScore } from './hooks/useScore';
-import {
-  CAR_SHAPES,
-  EXPLOSION_ITERATIONS,
-  INITIAL_SPEED,
-  MOVE_POSITION,
-  RANDOM_CAR_SHAPES,
-  STAGE_HEIGHT,
-  STAGE_WIDTH,
-} from './constants';
 
 let timeoutId: number | null;
 
 const App: React.FC = () => {
-  const [speed, setSpeed] = useState<number | null>(INITIAL_SPEED);
+  const [speed, setSpeed] = useState<number | null>(constants.INITIAL_SPEED);
   const [secondsElapsed, setSecondsElapsed] = useState<number>(0);
   const [cars, setCars] = useState<Car[]>([]);
   const [borders, setBorders] = useState<Coordinate[]>([]);
@@ -39,7 +31,7 @@ const App: React.FC = () => {
   const [score, setScore, getHighScore, saveHighScore] = useScore();
 
   const _movePlayer = (key: string) => {
-    const movePosition = MOVE_POSITION[key];
+    const movePosition = constants.MOVE_POSITION[key];
     if (speed !== null && !checkWallCollision(player, stage, movePosition)) {
       const car = checkCarsCollision(player, cars, movePosition);
       if (!car) {
@@ -59,11 +51,11 @@ const App: React.FC = () => {
     }, 5);
   };
 
-  const getRandomSide = () => (Math.random() > 0.5 ? STAGE_WIDTH - 5 : 2);
+  const getRandomSide = () => (Math.random() > 0.5 ? constants.STAGE_WIDTH - 5 : 2);
 
   const initGame = () => {
     window.addEventListener('keydown', (e: KeyboardEvent) => {
-      if (e.key in MOVE_POSITION) {
+      if (e.key in constants.MOVE_POSITION) {
         e.preventDefault();
         movePlayer(e.key);
       }
@@ -77,7 +69,7 @@ const App: React.FC = () => {
     setScore(0);
     setSecondsElapsed(0);
     resetPlayer();
-    setSpeed(INITIAL_SPEED);
+    setSpeed(constants.INITIAL_SPEED);
     setCars([]);
     setBorders([]);
   };
@@ -89,7 +81,9 @@ const App: React.FC = () => {
   };
 
   const produceBorders = () => {
-    let newBorders = (borders as Coordinate[]).filter(b => b.y < STAGE_HEIGHT).map(b => ({ ...b, y: b.y + 1 }));
+    let newBorders = (borders as Coordinate[])
+      .filter(b => b.y < constants.STAGE_HEIGHT)
+      .map(b => ({ ...b, y: b.y + 1 }));
     if (ticks % 4 === 0) {
       newBorders = newBorders.concat(createBorders());
     }
@@ -98,15 +92,15 @@ const App: React.FC = () => {
 
   const produceCars = () => {
     const newCars = (cars as Car[])
-      .filter(c => c.pos.y < STAGE_HEIGHT)
+      .filter(c => c.pos.y < constants.STAGE_HEIGHT)
       .map(c => ({ ...c, pos: { ...c.pos, y: c.pos.y + 1 } }));
     const lastSpawnedCar = newCars[newCars.length - 1];
     if (newCars.length === 0 || (ticks % getRandomInt(8, 10) === 0 && lastSpawnedCar.pos.y > 4)) {
       let sh: number[][];
-      if (RANDOM_CAR_SHAPES) {
-        sh = CAR_SHAPES[Math.floor(Math.random() * CAR_SHAPES.length)];
+      if (constants.RANDOM_CAR_SHAPES) {
+        sh = constants.CAR_SHAPES[Math.floor(Math.random() * constants.CAR_SHAPES.length)];
       } else {
-        sh = CAR_SHAPES[0];
+        sh = constants.CAR_SHAPES[0];
       }
       newCars.push({ shape: sh, pos: { x: getRandomSide(), y: -3 } });
     }
@@ -148,24 +142,24 @@ const App: React.FC = () => {
     () => {
       setExplosion(e => ({ ...e, iteration: e.iteration + 1 }));
     },
-    gameOver && explosion.iteration < EXPLOSION_ITERATIONS ? 70 : null,
+    gameOver && explosion.iteration < constants.EXPLOSION_ITERATIONS ? 70 : null,
   );
 
   return (
     <Wrapper>
       <Stage
         stage={stage}
-        gameOver={gameOver && explosion.iteration === EXPLOSION_ITERATIONS}
+        gameOver={gameOver && explosion.iteration === constants.EXPLOSION_ITERATIONS}
         highScore={getHighScore()}
       />
       <Aside>
         <Display text={`Score: ${score}`} />
         <Button
-          callback={() => setSpeed(speed ? null : INITIAL_SPEED)}
+          callback={() => setSpeed(speed ? null : constants.INITIAL_SPEED)}
           text={speed === null ? 'Resume' : 'Pause'}
           disabled={gameOver}
         />
-        {gameOver && explosion.iteration === EXPLOSION_ITERATIONS && (
+        {gameOver && explosion.iteration === constants.EXPLOSION_ITERATIONS && (
           <Button callback={() => restartGame()} text={'Restart'} />
         )}
         {isMobile() && <Keyboard onKeyDown={key => movePlayer(key)} />}

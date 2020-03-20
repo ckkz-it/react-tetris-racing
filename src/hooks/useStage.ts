@@ -1,26 +1,20 @@
 import { useEffect, useState } from 'react';
 
 import { createStage } from '../helpers';
-import { Car, Coordinate, Hook, Stage } from '../interfaces';
+import { Car, Coordinate, Explosion, Hook, Stage } from '../interfaces';
 import { EXPLOSION_SHAPES, STAGE_HEIGHT } from '../constants';
 
-export const useStage: Hook<[Stage]> = (
-  player: Car,
-  borders: Coordinate[],
-  cars: Car[],
-  explosion: { car: Car | null; iteration: number },
-) => {
+export const useStage: Hook<[Stage]> = (player: Car, borders: Coordinate[], cars: Car[], explosion: Explosion) => {
   const [stage, setStage] = useState(createStage());
 
   const drawOnStage = (newStage: Stage, shape: number[][], pos: Coordinate, clear = false) => {
     shape.forEach((row, y) => {
-      row.forEach((value, x) => {
-        if (clear) {
-          if (y + pos.y >= 0 && y + pos.y < STAGE_HEIGHT) {
+      row.forEach((cell, x) => {
+        const insideStage = y + pos.y >= 0 && y + pos.y < STAGE_HEIGHT;
+        if (insideStage) {
+          if (clear) {
             newStage[y + pos.y][x + pos.x] = 0;
-          }
-        } else {
-          if (value !== 0 && y + pos.y >= 0 && y + pos.y < STAGE_HEIGHT) {
+          } else if (cell !== 0) {
             newStage[y + pos.y][x + pos.x] = 1;
           }
         }
