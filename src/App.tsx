@@ -18,7 +18,7 @@ import Keyboard from './components/Keyboard';
 let timeoutId: number | null;
 
 const App: React.FC = () => {
-  const [speed, setSpeed] = useState<number | null>(constants.INITIAL_SPEED);
+  const [speed, setSpeed] = useState<number | null>(null);
   const [secondsElapsed, setSecondsElapsed] = useState<number>(0);
   const [cars, setCars] = useState<Car[]>([]);
   const [borders, setBorders] = useState<Coordinate[]>([]);
@@ -53,13 +53,8 @@ const App: React.FC = () => {
 
   const getRandomSide = () => (Math.random() > 0.5 ? constants.STAGE_WIDTH - 5 : 2);
 
-  const initGame = () => {
-    window.addEventListener('keydown', (e: KeyboardEvent) => {
-      if (e.key in constants.MOVE_POSITION) {
-        e.preventDefault();
-        movePlayer(e.key);
-      }
-    });
+  const startGame = () => {
+    setSpeed(constants.INITIAL_SPEED);
   };
 
   const restartGame = () => {
@@ -107,8 +102,6 @@ const App: React.FC = () => {
     setCars(newCars);
   };
 
-  initGame();
-
   useInterval(
     () => {
       setSecondsElapsed(t => t + 1);
@@ -145,6 +138,13 @@ const App: React.FC = () => {
     gameOver && explosion.iteration < constants.EXPLOSION_ITERATIONS ? 70 : null,
   );
 
+  window.addEventListener('keydown', (e: KeyboardEvent) => {
+    if (ticks !== 0 && e.key in constants.MOVE_POSITION) {
+      e.preventDefault();
+      movePlayer(e.key);
+    }
+  });
+
   return (
     <Wrapper>
       <Stage
@@ -158,11 +158,14 @@ const App: React.FC = () => {
         {getHighScore() && gameOver && explosion.iteration === constants.EXPLOSION_ITERATIONS && (
           <Button callback={() => resetHighScore()} text={'Reset High Score'} />
         )}
-        <Button
-          callback={() => setSpeed(speed ? null : constants.INITIAL_SPEED)}
-          text={speed === null ? 'Resume' : 'Pause'}
-          disabled={gameOver}
-        />
+        {ticks === 0 && <Button callback={() => startGame()} text={'Start Game'} />}
+        {ticks !== 0 && (
+          <Button
+            callback={() => setSpeed(speed ? null : constants.INITIAL_SPEED)}
+            text={speed === null ? 'Resume' : 'Pause'}
+            disabled={gameOver}
+          />
+        )}
         {gameOver && explosion.iteration === constants.EXPLOSION_ITERATIONS && (
           <Button callback={() => restartGame()} text={'Restart'} />
         )}
