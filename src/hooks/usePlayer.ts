@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-import { Car, Coordinate, Hook } from '../interfaces';
-import { CAR_SHAPES, STAGE_HEIGHT, STAGE_WIDTH } from '../constants';
+import { Car, Coordinate, Hook } from '../utils/interfaces';
+import { CAR_SHAPES, STAGE_HEIGHT, STAGE_WIDTH } from '../utils/constants';
 
 const initialPlayer = {
   pos: { x: STAGE_WIDTH - 5, y: STAGE_HEIGHT - 5 },

@@ -1,9 +1,9 @@
 import { useState } from 'react';
 
-import { HIGH_SCORE_KEY } from '../constants';
-import { Hook, UseStateAction } from '../interfaces';
+import { HIGH_SCORE_KEY } from '../utils/constants';
+import { Callback, Hook, UseStateAction } from '../utils/interfaces';
 
-export const useScore: Hook<[number, UseStateAction<number>, () => number, () => void]> = () => {
+export const useScore: Hook<[number, UseStateAction<number>, () => number, Callback, Callback]> = () => {
   const [score, setScore] = useState(0);
 
   const saveHighScore = () => {
@@ -22,5 +22,9 @@ export const useScore: Hook<[number, UseStateAction<number>, () => number, () =>
     return hs ? Number(hs) : 0;
   };
 
-  return [score, setScore, getHighScore, saveHighScore];
+  const resetHighScore = () => {
+    window.localStorage.removeItem(HIGH_SCORE_KEY);
+  };
+
+  return [score, setScore, getHighScore, saveHighScore, resetHighScore];
 };

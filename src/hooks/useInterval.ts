@@ -1,12 +1,11 @@
 import { useEffect, useRef } from 'react';
 
-import { Hook } from '../interfaces';
+import { Callback, Hook } from '../utils/interfaces';
 
-type cb = () => void;
 
 // https://overreacted.io/making-setinterval-declarative-with-react-hooks/
-export const useInterval: Hook<void> = (callback: cb, delay: number | null) => {
-  const savedCallback = useRef<cb>();
+export const useInterval: Hook<void> = (callback: Callback, delay: number | null) => {
+  const savedCallback = useRef<Callback>();
 
   // Remember the latest callback.
   useEffect(() => {

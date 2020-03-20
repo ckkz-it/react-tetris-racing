@@ -20,3 +20,5 @@ export interface Explosion {
 export type UseStateAction<T> = Dispatch<SetStateAction<T>>;
 
 export type Hook<T> = (...args: any[]) => T;
+
+export type Callback = () => void;

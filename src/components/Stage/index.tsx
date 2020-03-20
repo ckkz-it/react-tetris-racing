@@ -1,10 +1,12 @@
 import React from 'react';
 
-import { CellType, STAGE_HEIGHT, STAGE_WIDTH } from '../../constants';
-import { Stage as IStage } from '../../interfaces';
+import { CellType, STAGE_HEIGHT, STAGE_WIDTH } from '../../utils/constants';
+import { Stage as IStage } from '../../utils/interfaces';
 import StyledStage from './StyledStage';
 import Cell from '../Cell';
 import StageOverlay from '../StageOverlay';
+import StyledGameOver from './StyledGameOver';
+import StyledHighScore from './StyledHighScore';
 
 interface Props {
   stage: IStage;
@@ -22,8 +24,8 @@ const Stage: React.FC<Props> = ({ stage, gameOver, highScore }) => {
       {gameOver && (
         <StageOverlay>
           <>
-            <div style={{ color: '#b90000', fontSize: '1.7rem' }}>GAME OVER</div>
-            <div style={{ color: '#cacaca', fontSize: '1.5rem' }}>High Score: {highScore}</div>
+            <StyledGameOver>GAME OVER</StyledGameOver>
+            <StyledHighScore>High Score: {highScore}</StyledHighScore>
           </>
         </StageOverlay>
       )}

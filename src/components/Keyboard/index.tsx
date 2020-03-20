@@ -3,7 +3,7 @@ import React from 'react';
 import StyledKeyboard from './StyledKeyboard';
 import Key from './Key';
 import { KeyWrapper } from './StyledKey';
-import { ArrowCode, KeyToMove } from '../../constants';
+import { ArrowCode, KeyToMove } from '../../utils/constants';
 
 interface Props {
   onKeyDown: (key: string) => void;

@@ -5,8 +5,8 @@
   src: local('./assets/fonts/tetris.woff'), url('./assets/fonts/tetris.woff') format('woff');
 }
 
-html,
-body {
+html {
+  font-size: 16px;
   background-color: #000;
   margin: 0;
   padding: 0;
@@ -18,13 +18,31 @@ body {
 }
 
 @media screen and (max-width: 1200px) {
-  * {
+  html {
     font-size: 14px;
   }
 }
 
 @media screen and (max-width: 900px) {
-  * {
+  html {
     font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 756px) {
+  html {
+    font-size: 10px;
+  }
+}
+
+@media screen and (max-width: 596px) {
+  html {
+    font-size: 7px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  html {
+    font-size: 5px;
   }
 }

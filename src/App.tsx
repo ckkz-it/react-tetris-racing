@@ -5,9 +5,9 @@ import { useStage } from './hooks/useStage';
 import { usePlayer } from './hooks/usePlayer';
 import { useInterval } from './hooks/useInterval';
 import { useScore } from './hooks/useScore';
-import { checkCarsCollision, checkWallCollision, createBorders, getRandomInt, isMobile } from './helpers';
-import * as constants from './constants';
-import { Car, Coordinate, Explosion } from './interfaces';
+import { checkCarsCollision, checkWallCollision, createBorders, getRandomInt, isMobile } from './utils/helpers';
+import * as constants from './utils/constants';
+import { Car, Coordinate, Explosion } from './utils/interfaces';
 import Stage from './components/Stage';
 import Button from './components/Button';
 import Display from './components/Display';
@@ -28,7 +28,7 @@ const App: React.FC = () => {
 
   const [player, updatePlayerPos, resetPlayer] = usePlayer();
   const [stage] = useStage(player, borders, cars, explosion);
-  const [score, setScore, getHighScore, saveHighScore] = useScore();
+  const [score, setScore, getHighScore, saveHighScore, resetHighScore] = useScore();
 
   const _movePlayer = (key: string) => {
     const movePosition = constants.MOVE_POSITION[key];
@@ -154,6 +154,9 @@ const App: React.FC = () => {
       />
       <Aside>
         <Display text={`Score: ${score}`} />
+        {getHighScore() && gameOver && explosion.iteration === constants.EXPLOSION_ITERATIONS && (
+          <Button callback={() => resetHighScore()} text={'Reset High score'} />
+        )}
         <Button
           callback={() => setSpeed(speed ? null : constants.INITIAL_SPEED)}
           text={speed === null ? 'Resume' : 'Pause'}

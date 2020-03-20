@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { STAGE_WIDTH } from '../../constants';
+import { STAGE_WIDTH } from '../../utils/constants';
 
 interface Props {
   type: string;
