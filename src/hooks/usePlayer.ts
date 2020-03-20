@@ -8,8 +8,8 @@ const initialPlayer = {
   shape: CAR_SHAPES[0],
 };
 
-const usePlayer = () => {
-  const [player, setPlayer] = useState<Car>({...initialPlayer});
+export const usePlayer = () => {
+  const [player, setPlayer] = useState<Car>({ ...initialPlayer });
 
   const updatePlayerPos = ({ x, y }: Coordinate) => {
     setPlayer(prev => ({
@@ -19,10 +19,8 @@ const usePlayer = () => {
   };
 
   const resetPlayer = () => {
-    setPlayer({...initialPlayer});
+    setPlayer({ ...initialPlayer });
   };
 
   return [player, updatePlayerPos, resetPlayer] as any;
 };
-
-export default usePlayer;

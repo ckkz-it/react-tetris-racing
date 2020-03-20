@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { createStage, EXPLOSION_SHAPES, STAGE_HEIGHT } from '../helpers';
 import { Car, Coordinate, Stage } from '../interfaces';
 
-const useStage = (
+export const useStage = (
   player: Car,
   borders: Coordinate[],
   cars: Car[],
@@ -75,5 +75,3 @@ const useStage = (
 
   return [stage, setStage] as any;
 };
-
-export default useStage;

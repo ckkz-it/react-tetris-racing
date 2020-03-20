@@ -27,11 +27,17 @@ export const CAR_SHAPES = [
     [1, 0, 1],
   ],
 ];
+export enum KeyToMove {
+  UP = 'ArrowUp',
+  DOWN = 'ArrowDown',
+  LEFT = 'ArrowLeft',
+  RIGHT = 'ArrowRight',
+}
 export const MOVE_POSITION: { [key: string]: Coordinate } = {
-  ArrowUp: { x: 0, y: -1 },
-  ArrowDown: { x: 0, y: 1 },
-  ArrowLeft: { x: -3, y: 0 },
-  ArrowRight: { x: 3, y: 0 },
+  [KeyToMove.UP]: { x: 0, y: -1 },
+  [KeyToMove.DOWN]: { x: 0, y: 1 },
+  [KeyToMove.LEFT]: { x: -3, y: 0 },
+  [KeyToMove.RIGHT]: { x: 3, y: 0 },
 };
 export const EXPLOSION_ITERATIONS = 10;
 export const EXPLOSION_SHAPES = [
@@ -124,9 +130,9 @@ export const CellType = {
   LIGHT: '/img/light_texture.jpg',
 };
 
-export const ArrowCode = {
-  ArrowLeft: '\u2190',
-  ArrowUp: '\u2191',
-  ArrowDown: '\u2193',
-  ArrowRight: '\u2192',
-};
+export enum ArrowCode {
+  LEFT = '\u2190',
+  UP = '\u2191',
+  DOWN = '\u2193',
+  RIGHT = '\u2192',
+}

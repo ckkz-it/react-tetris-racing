@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 
 import './App.css';
 import Stage from './components/Stage';
-import useStage from './hooks/useStage';
-import usePlayer from './hooks/usePlayer';
+import { useStage } from './hooks/useStage';
+import { usePlayer } from './hooks/usePlayer';
 import {
   CAR_SHAPES,
   checkCarsCollision,
@@ -20,7 +20,7 @@ import {
   STAGE_WIDTH,
 } from './helpers';
 import { useInterval } from './hooks/useInterval';
-import { Car, Coordinate } from './interfaces';
+import { Car, Coordinate, Explosion } from './interfaces';
 import Button from './components/Button';
 import Display from './components/Display';
 import Wrapper from './components/Wrapper';
@@ -35,15 +35,14 @@ const App: React.FC = () => {
   const [score, setScore] = useState<number>(0);
   const [cars, setCars] = useState<Car[]>([]);
   const [borders, setBorders] = useState<Coordinate[]>([]);
-  const [explosion, setExplosion] = useState<{ car: Car | null; iteration: number }>({ car: null, iteration: 0 });
+  const [explosion, setExplosion] = useState<Explosion>({ car: null, iteration: 0 });
   const [gameOver, setGameOver] = useState(false);
-
   const [ticks, setTicks] = useState(0);
 
   const [player, updatePlayerPos, resetPlayer] = usePlayer();
   const [stage] = useStage(player, borders, cars, explosion);
 
-  const movePlayer = (key: string) => {
+  const _movePlayer = (key: string) => {
     const movePosition = MOVE_POSITION[key];
     if (speed !== null && !checkWallCollision(player, stage, movePosition)) {
       const car = checkCarsCollision(player, cars, movePosition);
@@ -55,22 +54,24 @@ const App: React.FC = () => {
     }
   };
 
-  const onKeyDown = (e: KeyboardEvent) => {
-    if (e.key in MOVE_POSITION) {
-      e.preventDefault();
+  const movePlayer = (key: string) => {
       if (timeoutId) {
         clearTimeout(timeoutId);
       }
       timeoutId = setTimeout(() => {
-        movePlayer(e.key);
+        _movePlayer(key);
       }, 5);
-    }
   };
 
   const getRandomSide = () => (Math.random() > 0.5 ? STAGE_WIDTH - 5 : 2);
 
   const initGame = () => {
-    window.addEventListener('keydown', onKeyDown);
+    window.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key in MOVE_POSITION) {
+        e.preventDefault();
+        movePlayer(e.key);
+      }
+    });
   };
 
   const restartGame = () => {

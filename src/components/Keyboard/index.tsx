@@ -2,23 +2,23 @@ import React from 'react';
 
 import StyledKeyboard from './StyledKeyboard';
 import Key from './Key';
-import { ArrowCode } from '../../helpers';
+import { ArrowCode, KeyToMove } from '../../helpers';
 import { KeyWrapper } from './StyledKey';
 
 interface Props {
-  onKeyDown: (dir: string) => any;
+  onKeyDown: (key: string) => void;
 }
 
 const Keyboard = ({ onKeyDown }: Props) => {
   return (
     <StyledKeyboard>
       <KeyWrapper>
-        <Key direction={ArrowCode.ArrowUp} onPress={() => onKeyDown('ArrowUp')} />
+        <Key direction={ArrowCode.UP} onPress={() => onKeyDown(KeyToMove.UP)} />
       </KeyWrapper>
       <KeyWrapper>
-        <Key direction={ArrowCode.ArrowLeft} onPress={() => onKeyDown('ArrowLeft')} />
-        <Key direction={ArrowCode.ArrowDown} onPress={() => onKeyDown('ArrowDown')} />
-        <Key direction={ArrowCode.ArrowRight} onPress={() => onKeyDown('ArrowRight')} />
+        <Key direction={ArrowCode.LEFT} onPress={() => onKeyDown(KeyToMove.LEFT)} />
+        <Key direction={ArrowCode.DOWN} onPress={() => onKeyDown(KeyToMove.DOWN)} />
+        <Key direction={ArrowCode.RIGHT} onPress={() => onKeyDown(KeyToMove.RIGHT)} />
       </KeyWrapper>
     </StyledKeyboard>
   );
