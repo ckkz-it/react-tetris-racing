@@ -12,6 +12,7 @@ const StyledButton = styled.button`
   color: #fff;
   font-family: Tetris, sans-serif;
   touch-action: manipulation;
+  user-select: none;
 
   &[disabled] {
     cursor: default;
