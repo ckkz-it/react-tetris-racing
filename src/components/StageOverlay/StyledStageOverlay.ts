@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const StyledGameOver = styled.div`
+const StyledStageOverlay = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
@@ -10,18 +10,8 @@ const StyledGameOver = styled.div`
   white-space: nowrap;
   background: #000000;
   border-radius: 5px;
-  opacity: 0.8;
+  opacity: 0.9;
   text-align: center;
-
-  div:first-child {
-    font-size: 1.7rem;
-    color: #b90000;
-  }
-
-  div {
-    font-size: 1.5rem;
-    color: #cacaca;
-  }
 
   @media screen and (max-width: 1200px) {
     padding: 20px;
@@ -32,4 +22,4 @@ const StyledGameOver = styled.div`
   }
 `;
 
-export default StyledGameOver;
+export default StyledStageOverlay;

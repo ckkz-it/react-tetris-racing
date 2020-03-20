@@ -4,7 +4,7 @@ import { CellType, STAGE_HEIGHT, STAGE_WIDTH } from '../../helpers';
 import { Stage as IStage } from '../../interfaces';
 import StyledStage from './StyledStage';
 import Cell from '../Cell';
-import GameOver from '../GameOver';
+import StageOverlay from '../StageOverlay';
 
 interface Props {
   stage: IStage;
@@ -19,7 +19,14 @@ const Stage: React.FC<Props> = ({ stage, gameOver, highScore }) => {
   return (
     <StyledStage width={STAGE_WIDTH} height={STAGE_HEIGHT}>
       {cells}
-      {gameOver && <GameOver highScore={highScore} />}
+      {gameOver && (
+        <StageOverlay>
+          <>
+            <div style={{ color: '#b90000', fontSize: '1.7rem' }}>GAME OVER</div>
+            <div style={{ color: '#cacaca', fontSize: '1.5rem' }}>High Score: {highScore}</div>
+          </>
+        </StageOverlay>
+      )}
     </StyledStage>
   );
 };
