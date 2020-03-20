@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 
-import { createStage, EXPLOSION_SHAPES, STAGE_HEIGHT } from '../helpers';
-import { Car, Coordinate, Stage } from '../interfaces';
+import { createStage } from '../helpers';
+import { Car, Coordinate, Hook, Stage } from '../interfaces';
+import { EXPLOSION_SHAPES, STAGE_HEIGHT } from '../constants';
 
-export const useStage = (
+export const useStage: Hook<[Stage]> = (
   player: Car,
   borders: Coordinate[],
   cars: Car[],
@@ -73,5 +74,5 @@ export const useStage = (
     }
   }, [explosion.car, explosion.iteration, player]);
 
-  return [stage, setStage] as any;
+  return [stage];
 };

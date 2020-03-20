@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { CellType, STAGE_HEIGHT, STAGE_WIDTH } from '../../helpers';
+import { CellType, STAGE_HEIGHT, STAGE_WIDTH } from '../../constants';
 import { Stage as IStage } from '../../interfaces';
 import StyledStage from './StyledStage';
 import Cell from '../Cell';

@@ -1,14 +1,14 @@
 import { useState } from 'react';
 
-import { Car, Coordinate } from '../interfaces';
-import { CAR_SHAPES, STAGE_HEIGHT, STAGE_WIDTH } from '../helpers';
+import { Car, Coordinate, Hook } from '../interfaces';
+import { CAR_SHAPES, STAGE_HEIGHT, STAGE_WIDTH } from '../constants';
 
 const initialPlayer = {
   pos: { x: STAGE_WIDTH - 5, y: STAGE_HEIGHT - 5 },
   shape: CAR_SHAPES[0],
 };
 
-export const usePlayer = () => {
+export const usePlayer: Hook<[Car, (c: Coordinate) => void, () => void]> = () => {
   const [player, setPlayer] = useState<Car>({ ...initialPlayer });
 
   const updatePlayerPos = ({ x, y }: Coordinate) => {
@@ -22,5 +22,5 @@ export const usePlayer = () => {
     setPlayer({ ...initialPlayer });
   };
 
-  return [player, updatePlayerPos, resetPlayer] as any;
+  return [player, updatePlayerPos, resetPlayer];
 };

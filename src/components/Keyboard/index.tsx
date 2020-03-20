@@ -2,14 +2,14 @@ import React from 'react';
 
 import StyledKeyboard from './StyledKeyboard';
 import Key from './Key';
-import { ArrowCode, KeyToMove } from '../../helpers';
 import { KeyWrapper } from './StyledKey';
+import { ArrowCode, KeyToMove } from '../../constants';
 
 interface Props {
   onKeyDown: (key: string) => void;
 }
 
-const Keyboard = ({ onKeyDown }: Props) => {
+const Keyboard: React.FC<Props> = ({ onKeyDown }) => {
   return (
     <StyledKeyboard>
       <KeyWrapper>

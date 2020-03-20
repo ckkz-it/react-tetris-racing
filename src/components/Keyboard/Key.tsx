@@ -7,6 +7,6 @@ interface Props {
   onPress: () => any;
 }
 
-const Key = ({ direction, onPress }: Props) => <StyledKey onClick={onPress}>{direction}</StyledKey>;
+const Key: React.FC<Props> = ({ direction, onPress }) => <StyledKey onClick={onPress}>{direction}</StyledKey>;
 
 export default Key;

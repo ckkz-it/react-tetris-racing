@@ -8,7 +8,7 @@ interface Props {
   disabled?: boolean;
 }
 
-const Button = ({ callback, text, ...rest }: Props) => {
+const Button: React.FC<Props> = ({ callback, text, ...rest }) => {
   return <StyledButton onClick={callback} {...rest}>{text}</StyledButton>;
 };
 

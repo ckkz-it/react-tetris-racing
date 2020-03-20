@@ -6,7 +6,7 @@ interface Props {
   text: string;
 }
 
-const Display = ({ text }: Props) => {
+const Display: React.FC<Props> = ({ text }) => {
   return <StyledDisplay>{text}</StyledDisplay>;
 };
 

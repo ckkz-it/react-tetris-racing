@@ -4,21 +4,7 @@ import './App.css';
 import Stage from './components/Stage';
 import { useStage } from './hooks/useStage';
 import { usePlayer } from './hooks/usePlayer';
-import {
-  CAR_SHAPES,
-  checkCarsCollision,
-  checkWallCollision,
-  createBorders,
-  EXPLOSION_ITERATIONS,
-  getRandomInt,
-  HIGH_SCORE_KEY,
-  INITIAL_SPEED,
-  isMobile,
-  MOVE_POSITION,
-  RANDOM_CAR_SHAPES,
-  STAGE_HEIGHT,
-  STAGE_WIDTH,
-} from './helpers';
+import { checkCarsCollision, checkWallCollision, createBorders, getRandomInt, isMobile } from './helpers';
 import { useInterval } from './hooks/useInterval';
 import { Car, Coordinate, Explosion } from './interfaces';
 import Button from './components/Button';
@@ -26,13 +12,22 @@ import Display from './components/Display';
 import Wrapper from './components/Wrapper';
 import Aside from './components/Aside';
 import Keyboard from './components/Keyboard';
+import { useScore } from './hooks/useScore';
+import {
+  CAR_SHAPES,
+  EXPLOSION_ITERATIONS,
+  INITIAL_SPEED,
+  MOVE_POSITION,
+  RANDOM_CAR_SHAPES,
+  STAGE_HEIGHT,
+  STAGE_WIDTH,
+} from './constants';
 
 let timeoutId: number | null;
 
 const App: React.FC = () => {
   const [speed, setSpeed] = useState<number | null>(INITIAL_SPEED);
   const [secondsElapsed, setSecondsElapsed] = useState<number>(0);
-  const [score, setScore] = useState<number>(0);
   const [cars, setCars] = useState<Car[]>([]);
   const [borders, setBorders] = useState<Coordinate[]>([]);
   const [explosion, setExplosion] = useState<Explosion>({ car: null, iteration: 0 });
@@ -41,6 +36,7 @@ const App: React.FC = () => {
 
   const [player, updatePlayerPos, resetPlayer] = usePlayer();
   const [stage] = useStage(player, borders, cars, explosion);
+  const [score, setScore, getHighScore, saveHighScore] = useScore();
 
   const _movePlayer = (key: string) => {
     const movePosition = MOVE_POSITION[key];
@@ -55,12 +51,12 @@ const App: React.FC = () => {
   };
 
   const movePlayer = (key: string) => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-      timeoutId = setTimeout(() => {
-        _movePlayer(key);
-      }, 5);
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+    timeoutId = setTimeout(() => {
+      _movePlayer(key);
+    }, 5);
   };
 
   const getRandomSide = () => (Math.random() > 0.5 ? STAGE_WIDTH - 5 : 2);
@@ -90,22 +86,6 @@ const App: React.FC = () => {
     setGameOver(true);
     setExplosion({ car, iteration: 0 });
     saveHighScore();
-  };
-
-  const saveHighScore = () => {
-    const hs = window.localStorage.getItem(HIGH_SCORE_KEY);
-    if (hs) {
-      if (Number(hs) < score) {
-        window.localStorage.setItem(HIGH_SCORE_KEY, score.toString());
-      }
-    } else {
-      window.localStorage.setItem(HIGH_SCORE_KEY, score.toString());
-    }
-  };
-
-  const getHighScore = () => {
-    const hs = window.localStorage.getItem(HIGH_SCORE_KEY);
-    return hs ? Number(hs) : 0;
   };
 
   const produceBorders = () => {
@@ -159,7 +139,7 @@ const App: React.FC = () => {
         return;
       }
 
-      setScore(s => Math.floor(s + (1000 / (speed as number)) * 10));
+      setScore((s: number) => Math.floor(s + (1000 / (speed as number)) * 10));
     },
     gameOver ? null : speed,
   );
