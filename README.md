@@ -2,6 +2,8 @@
 
 React implementation of an old tetris racing game, mostly popular on Game Boy devices.
 
+[Play](https://ckkz-it.github.io/react-tetris-racing/)
+
 ### Technologies used
 
 - react
