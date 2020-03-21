@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "d640a6818a7f911e9da84d02c82b26b8",
+    "revision": "dae564f1b4d56f6d27d7304c5ee87326",
     "url": "/react-tetris-racing/index.html"
   },
   {
-    "revision": "037e7d3c44f2eec7e443",
+    "revision": "0fa621e31dbbae0898eb",
     "url": "/react-tetris-racing/static/css/main.8cbb2d5a.chunk.css"
   },
   {
-    "revision": "cf1c0af1e9540a77c54c",
-    "url": "/react-tetris-racing/static/js/2.ac551e5e.chunk.js"
+    "revision": "382354035c22bdf366f3",
+    "url": "/react-tetris-racing/static/js/2.22fa3573.chunk.js"
   },
   {
     "revision": "f231859d6585c4cd5f80c344783ed269",
-    "url": "/react-tetris-racing/static/js/2.ac551e5e.chunk.js.LICENSE.txt"
+    "url": "/react-tetris-racing/static/js/2.22fa3573.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "037e7d3c44f2eec7e443",
-    "url": "/react-tetris-racing/static/js/main.f5a69f94.chunk.js"
+    "revision": "0fa621e31dbbae0898eb",
+    "url": "/react-tetris-racing/static/js/main.ce401dff.chunk.js"
   },
   {
     "revision": "6a8d1f8f9f3e1670dc1c",
