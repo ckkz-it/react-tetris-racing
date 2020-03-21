@@ -8,6 +8,7 @@ React implementation of an old tetris racing game, mostly popular on Game Boy de
 
 - react
 - typescript
+- styled components
 
 ### Functionality
 
