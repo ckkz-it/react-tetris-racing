@@ -1,6 +1,7 @@
 {
   "name": "react-tetris-racing",
   "version": "0.1.0",
+  "homepage": "https://ckkz-it.github.io/react-tetris-racing",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
@@ -20,7 +21,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -39,6 +41,7 @@
   },
   "devDependencies": {
     "@types/styled-components": "^5.0.1",
+    "gh-pages": "^2.2.0",
     "prettier": "^1.19.1",
     "tslint": "^6.1.0"
   }

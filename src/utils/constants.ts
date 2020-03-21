@@ -1,4 +1,6 @@
 import { Coordinate } from './interfaces';
+import lightTexture from '../assets/img/light_texture.jpg';
+import darkTexture from '../assets/img/dark_texture.jpg';
 
 export const STAGE_WIDTH = 10;
 export const STAGE_HEIGHT = 18;
@@ -77,8 +79,8 @@ export const EXPLOSION_SHAPES = [
 ];
 
 export const CellType = {
-  DARK: '/img/dark_texture.jpg',
-  LIGHT: '/img/light_texture.jpg',
+  DARK: darkTexture,
+  LIGHT: lightTexture,
 };
 
 export enum ArrowCode {
