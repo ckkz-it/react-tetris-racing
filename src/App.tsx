@@ -26,6 +26,7 @@ const App: React.FC = () => {
   const [gameOver, setGameOver] = useState(false);
   const [ticks, setTicks] = useState(0);
   const [gameStarted, setGameStarted] = useState(false);
+  const [paused, setPaused] = useState(false);
 
   const [player, updatePlayerPos, resetPlayer] = usePlayer();
   const [stage] = useStage(player, borders, cars, explosion);
@@ -108,7 +109,7 @@ const App: React.FC = () => {
     () => {
       setSecondsElapsed(t => t + 1);
     },
-    gameOver ? null : 1000,
+    gameOver || paused ? null : 1000,
   );
 
   useInterval(
@@ -130,7 +131,7 @@ const App: React.FC = () => {
 
       setScore((s: number) => Math.floor(s + (1000 / (speed as number)) * 10));
     },
-    gameOver ? null : speed,
+    gameOver || paused ? null : speed,
   );
 
   useInterval(
@@ -164,8 +165,8 @@ const App: React.FC = () => {
         {!gameStarted && <Button callback={() => startGame()} text={'Start Game'} />}
         {gameStarted && (
           <Button
-            callback={() => !gameOver && setSpeed(speed ? null : constants.INITIAL_SPEED)}
-            text={speed === null ? 'Resume' : 'Pause'}
+            callback={() => !gameOver && setPaused(!paused)}
+            text={paused ? 'Resume' : 'Pause'}
             disabled={gameOver}
           />
         )}
