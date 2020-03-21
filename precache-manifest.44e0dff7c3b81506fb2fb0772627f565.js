@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "dae564f1b4d56f6d27d7304c5ee87326",
+    "revision": "f61751bfd67632bbba52fa66848a02f9",
     "url": "/react-tetris-racing/index.html"
   },
   {
-    "revision": "0fa621e31dbbae0898eb",
+    "revision": "0281c086b28aa17fd8ce",
     "url": "/react-tetris-racing/static/css/main.8cbb2d5a.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/react-tetris-racing/static/js/2.22fa3573.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "0fa621e31dbbae0898eb",
-    "url": "/react-tetris-racing/static/js/main.ce401dff.chunk.js"
+    "revision": "0281c086b28aa17fd8ce",
+    "url": "/react-tetris-racing/static/js/main.6b356699.chunk.js"
   },
   {
     "revision": "6a8d1f8f9f3e1670dc1c",
